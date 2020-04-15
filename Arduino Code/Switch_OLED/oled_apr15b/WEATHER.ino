@@ -39,12 +39,14 @@ void weather() {
       Serial.println(timestamp1);
 
       // The 'weather' in the first position in the list, is actually a list, with only one element...
-      String desc1 = jsonBuffer["list"][0]["weather"][0]["description"];
+      String d1 = jsonBuffer["list"][0]["weather"][0]["description"];
+      desc1 = d1;
       Serial.print("The weather will be: ");
       Serial.println(desc1);
 
       // Temperature
-      float temp1 = jsonBuffer["list"][0]["main"]["temp"];
+      float tp1 = jsonBuffer["list"][0]["main"]["temp"];
+      temp1 = tp1;
       Serial.print("The temperature will be: ");
       Serial.print(temp1);
       Serial.println(" C");
@@ -52,17 +54,20 @@ void weather() {
 
 
       // the first forecast in the json object is at jsonBuffer['list'][0]
-      String timestamp2 = jsonBuffer["list"][1]["dt_txt"];
+      String ts2 = jsonBuffer["list"][1]["dt_txt"];
+      timestamp2 = ts2;
       Serial.print("The time for this forecast: ");
       Serial.println(timestamp2);
 
       // The 'weather' in the first position in the list, is actually a list, with only one element...
-      String desc2 = jsonBuffer["list"][1]["weather"][0]["description"];
+      String d2 = jsonBuffer["list"][1]["weather"][0]["description"];
+      desc2 = d2;
       Serial.print("The weather will be: ");
       Serial.println(desc2);
 
       // Temperature
-      float temp2 = jsonBuffer["list"][1]["main"]["temp"];
+      float tp2 = jsonBuffer["list"][1]["main"]["temp"];
+      temp2 = tp2;
       Serial.print("The temperature will be: ");
       Serial.print(temp2);
       Serial.println(" C");
@@ -70,17 +75,20 @@ void weather() {
 
 
       // the first forecast in the json object is at jsonBuffer['list'][0]
-      String timestamp3 = jsonBuffer["list"][2]["dt_txt"];
+      String ts3 = jsonBuffer["list"][2]["dt_txt"];
+      timestamp3 = ts3;
       Serial.print("The time for this forecast: ");
       Serial.println(timestamp3);
 
       // The 'weather' in the first position in the list, is actually a list, with only one element...
-      String desc3 = jsonBuffer["list"][2]["weather"][0]["description"];
+      String d3 = jsonBuffer["list"][2]["weather"][0]["description"];
+      desc3 = d3;
       Serial.print("The weather will be: ");
       Serial.println(desc3);
 
       // Temperature
-      float temp3 = jsonBuffer["list"][2]["main"]["temp"];
+      float tp3 = jsonBuffer["list"][2]["main"]["temp"];
+      temp3 = tp3;
       Serial.print("The temperature will be: ");
       Serial.print(temp3);
       Serial.println(" C");

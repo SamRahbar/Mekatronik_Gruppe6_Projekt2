@@ -1,6 +1,8 @@
 #include <U8g2lib.h>
 #include <Wire.h>
 
+// Switch function for OLED-creen.
+// Depending on the state, the OLED will display a specific message.
 
 void oled() {
 
@@ -56,7 +58,7 @@ void oled() {
 
       break;
 
-    case 4:
+    case 4: // TEST - green LED
 
       digitalWrite(2, HIGH);
       digitalWrite(ledPinGreen, HIGH);
@@ -75,7 +77,7 @@ void oled() {
 
       break;
 
-    case 5:
+    case 5: // TEST - red LED
 
       digitalWrite(ledPinGreen, LOW);
       digitalWrite(ledPinRed, HIGH);

@@ -13,8 +13,10 @@
   D6 - 220 OHM - GREEN LED - GND
 */
 
+//////////// HARDWARE FINISHED ////////////
 
-//////////// Initiering ///////////
+
+//////////// INITIATION ///////////
 
 //inkluderer nødvendige bibloteker
 #include <ESP8266WiFi.h>
@@ -69,7 +71,7 @@ float temp1;
 float temp2;
 float temp3;
 
-/////// INITIERING SLUT //////////
+/////// INITIATION FINISHED //////////
 
 //
 //
@@ -78,7 +80,7 @@ float temp3;
 //
 //
 
-/////// FUNKTIONSOPSÆTNING ////////
+/////// FUNKTION SETUP ////////
 
 
 // Opretter en placeholder for callback-funktionen til brug senere. Den rigtige funktion ses længere nede.
@@ -90,7 +92,7 @@ WiFiClient espClient; // Initialiserer wifi bibloteket ESP8266Wifi, som er inklu
 // Opretter forbindelse til mqtt klienten:
 PubSubClient client(mqtt_server, mqtt_port, callback, espClient); // Initialiserer bibloteket for at kunne modtage og sende beskeder til mqtt. Den henter fra definerede mqtt server og port. Den henter fra topic og beskeden payload
 
-/////// FUNKTIONSOPSÆTNING SLUT /////////
+/////// FUNCTION SETUP SINISHED /////////
 
 //
 //
@@ -99,7 +101,7 @@ PubSubClient client(mqtt_server, mqtt_port, callback, espClient); // Initialiser
 //
 //
 
-///////// CALLBACKFUNKTION ////////
+///////// CALLBACK FUNCTION ////////
 
 // Definerer callback funktionen der modtager beskeder fra mqtt
 // OBS: den her funktion kører hver gang MCU'en modtager en besked via mqtt
@@ -126,23 +128,25 @@ void callback(char* byteArraytopic, byte* byteArrayPayload, unsigned int length)
       // Loop (length) = "Study Abroad"
     }
 
-    if (payload == "GETWEATHER") {
+
+    // Depending on payload message, set at state for the OLED to display a specific message
+    if (payload == "GETWEATHER") { // Collect fresh weather data every 5 minutes
       weather();
       state = 1;
     }
-    if (payload == "WEATHER1") {
+    if (payload == "WEATHER1") { // 3 hour forecast
       state = 1;
     }
-    if (payload == "WEATHER2") {
+    if (payload == "WEATHER2") { // 6 hour forecast
       state = 2;
     }
-    if (payload == "WEATHER3") {
+    if (payload == "WEATHER3") { // 9 hour forecast
       state = 3;
     }
-    if (payload == "OPEN") {
+    if (payload == "OPEN") { // Test - turn on green led
       state = 4;
     }
-    if (payload == "CLOSED") {
+    if (payload == "CLOSED") { // Test - turn on red led
       state = 5;
     }
     else { // If the signal from the mqtt is not one of the available options, give a message to the mqtt server and pass
@@ -151,12 +155,12 @@ void callback(char* byteArraytopic, byte* byteArrayPayload, unsigned int length)
       delay(100);
     }
 
-    oled();
+    oled(); // Display the chosen message on OLED-screen
   }
 }
 
 
-///////// CALLBACK SLUT /////////
+///////// CALLBACK FINSHED /////////
 
 //
 //
@@ -181,7 +185,7 @@ void setup() {
   setup_wifi(); // Kører WiFi loopet og forbinder herved.
   client.setServer(mqtt_server, mqtt_port); // Forbinder til mqtt serveren (defineret længere oppe)
   client.setCallback(callback); // Ingangsætter den definerede callback funktion hver gang der er en ny besked på den subscribede "cmd"- topic
-  u8g2.begin();
+  u8g2.begin(); // Start OLED-display
 
 }
 //////// SETUP SLUT ////////
