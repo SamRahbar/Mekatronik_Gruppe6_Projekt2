@@ -17,6 +17,12 @@ String SecureID;
 String MasterID = "D9 DF 57 C1";
 bool NewCard = false;
 
+int state = 1;
+
+unsigned long ttime;
+unsigned long lastTtimeOpen = 0;
+const long openInterval = 3000;
+
 void setup() {
   Serial.begin(9600);
   RGBSetup();
@@ -25,6 +31,8 @@ void setup() {
 }
 
 void loop() {
+  ttime = millis();
   RFIDLoop();
   NewCardChanger();
+  LEDState();
 }
