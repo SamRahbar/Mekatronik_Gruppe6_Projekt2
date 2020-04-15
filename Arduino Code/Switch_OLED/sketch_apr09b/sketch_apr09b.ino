@@ -326,14 +326,7 @@ void callback(char* byteArraytopic, byte* byteArrayPayload, unsigned int length)
         delay(100);
         client.publish("Status", "Red");
 
-        u8g2.clearBuffer();          // clear the internal memory
-        u8g2.setFont(u8g2_font_ncenB08_tr); // choose a suitable font
-        u8g2.setCursor(0, 10);
-        u8g2.print("Another interesting thing");
-        u8g2.setCursor(0, 20);
-        u8g2.print("to write on the OLED...");
-        u8g2.sendBuffer();          // transfer internal memory to the display
-        delay(100);
+        oled();
 
         break;
 
