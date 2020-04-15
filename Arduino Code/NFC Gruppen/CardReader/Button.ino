@@ -10,7 +10,7 @@ void NewCardChanger() {
 
   if (buttonState == HIGH) {
     Serial.println("New card will be secured");
+    state = 2;
     NewCard = true;
-    analogWrite(blue_light_pin,80);
   }
 }

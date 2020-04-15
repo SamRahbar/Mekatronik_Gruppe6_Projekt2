@@ -29,28 +29,32 @@ void RFIDLoop() {
   }
   Serial.println();
   Serial.print("Message : ");
-  content.toUpperCase();
+  //content.toUpperCase();
 
-  if (NewCard) {
-    SecureID = content.substring(1);
-    Serial.println("New Card has been secured");
-    NewCard = false;
-    analogWrite(blue_light_pin,0);
-  }
-  else {
-    if (content.substring(1) == SecureID  ||  content.substring(1) == MasterID)  //change UID('s) of the card/cards that you want to give access
-    {
-      Serial.println("Authorized access");
-      Serial.println();
-      RGB_color(0, 80, 0); // LED Green
-      delay(1500);
+  if (ttime - lastTtimeOpen >= openInterval) {
+    bool run = false;
+    lastTtimeOpen = ttime;
+
+    if (state == 0 && run == false) {
+      run = true;
+      if (content.substring(1) == SecureID  ||  content.substring(1) == MasterID)  //change UID('s) of the card/cards that you want to give access
+      {
+        Serial.println("Authorized access");
+        state = 1;
+        Serial.println();
+      }
+      else   {
+        Serial.println("Access denied");
+        state = 0;
+        Serial.println();
+      }
     }
-    else   {
-      Serial.println("Access denied");
-      Serial.println();
-      RGB_color(80, 0, 0); // LED Red
-      delay(1500);
+    else if (state != 0 && run == false) {
+      run = true;
+      SecureID = content.substring(1);
+      Serial.println("New Card has been secured");
+      state = 0;
+      NewCard = false;
     }
-    RGB_color(0, 0, 0);    // LED Off
   }
 }
