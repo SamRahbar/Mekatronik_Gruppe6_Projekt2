@@ -20,7 +20,7 @@ void oled() {
       u8g2.setCursor(30, 30);
       u8g2.print("C");
       u8g2.sendBuffer();          // transfer internal memory to the display
-      delay(100);
+      //delay(100);
 
       break;
 
@@ -37,7 +37,7 @@ void oled() {
       u8g2.setCursor(30, 30);
       u8g2.print("C");
       u8g2.sendBuffer();          // transfer internal memory to the display
-      delay(100);
+      //delay(100);
 
       break;
 
@@ -54,7 +54,7 @@ void oled() {
       u8g2.setCursor(30, 30);
       u8g2.print("C");
       u8g2.sendBuffer();          // transfer internal memory to the display
-      delay(100);
+      //delay(100);
 
       break;
 
@@ -69,10 +69,10 @@ void oled() {
       u8g2.setFont(u8g2_font_ncenB08_tr); // choose a suitable font
       u8g2.setCursor(0, 10);
       u8g2.print("Locker opened");
-//      u8g2.setCursor(0, 20);
-//      u8g2.print("to write on the OLED...");
+      //      u8g2.setCursor(0, 20);
+      //      u8g2.print("to write on the OLED...");
       u8g2.sendBuffer();          // transfer internal memory to the display
-      delay(100);
+      //delay(100);
 
       break;
 
@@ -86,12 +86,30 @@ void oled() {
       u8g2.setFont(u8g2_font_ncenB08_tr); // choose a suitable font
       u8g2.setCursor(0, 10);
       u8g2.print("Access denied");
-//      u8g2.setCursor(0, 20);
-//      u8g2.print("to write on the OLED...");
+      //      u8g2.setCursor(0, 20);
+      //      u8g2.print("to write on the OLED...");
       u8g2.sendBuffer();          // transfer internal memory to the display
-      delay(100);
+      //delay(100);
 
-      Serial.println("Yeyey");
+      //Serial.println("Yeyey");
+      break;
+
+    case 6: // TEST - red LED
+
+      //RGB_color(90,0,0);
+      //delay(100);
+//      client.publish("Status", "Red");
+
+      u8g2.clearBuffer();          // clear the internal memory
+      u8g2.setFont(u8g2_font_ncenB08_tr); // choose a suitable font
+      u8g2.setCursor(0, 10);
+      u8g2.print("New card has been");
+      u8g2.setCursor(0, 20);
+      u8g2.print("secured");
+      u8g2.sendBuffer();          // transfer internal memory to the display
+      //delay(100);
+
+      //Serial.println("Yeyey");
       break;
 
   }

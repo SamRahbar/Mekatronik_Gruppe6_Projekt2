@@ -1,7 +1,6 @@
 //////////// START WEATHER ////////////
 
 void weather() {
-
   if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
 
     HTTPClient http; //Declare an object of class HTTPClient

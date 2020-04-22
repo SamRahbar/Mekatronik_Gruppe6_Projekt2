@@ -28,33 +28,38 @@ void RFIDLoop() {
     content.concat(String(mfrc522.uid.uidByte[i], HEX));
   }
   Serial.println();
-  Serial.print("Message : ");
+  //Serial.print("Message : ");
   //content.toUpperCase();
 
   if (ttime - lastTtimeOpen >= openInterval) {
     bool run = false;
     lastTtimeOpen = ttime;
 
-    if (sstate == 0 && run == false) {
+    if (doorOpen == false && run == false) {
       run = true;
-      if (content.substring(1) == SecureID  ||  content.substring(1) == MasterID)  //change UID('s) of the card/cards that you want to give access
+      if ((content.substring(1) == SecureID)||(content.substring(1) == MasterID))  //change UID('s) of the card/cards that you want to give access
       {
         Serial.println("Authorized access");
-        sstate = 1;
+        doorOpen = true;
+        state = 4;
+        oled();
         Serial.println();
       }
       else   {
         Serial.println("Access denied");
-        sstate = 0;
+        doorOpen = false;
+        state = 5;
+        oled();
         Serial.println();
       }
     }
-    else if (sstate != 0 && run == false) {
+    else if (doorOpen == true && run == false) {
       run = true;
       SecureID = content.substring(1);
       Serial.println("New Card has been secured");
-      sstate = 0;
-      NewCard = false;
+      doorOpen = false;
+      state = 6;
+      oled();
     }
   }
 }

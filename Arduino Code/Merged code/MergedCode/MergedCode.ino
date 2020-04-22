@@ -64,13 +64,14 @@ float temp3;
 //-- RFID Values ------
 String SecureID;
 String MasterID = "D9 DF 57 C1";
-bool NewCard = false;
 
-int sstate = 1;
+bool doorOpen = true;
 
 unsigned long ttime;
 unsigned long lastTtimeOpen = 0;
 const long openInterval = 3000;
+unsigned long prevMillisConnect = 0;
+unsigned long prevMillisReconnect = 0;
 
 // Opretter en placeholder for callback-funktionen til brug senere. Den rigtige funktion ses længere nede.
 void callback(char* byteArraytopic, byte* byteArrayPayload, unsigned int length);
@@ -83,33 +84,18 @@ PubSubClient client(mqtt_server, mqtt_port, callback, espClient); // Initialiser
 
 /////// INITIATION FINISHED //////////
 
-
-
-///////// SETUP ///////////
 void setup() {
 
   Serial.begin(115200); // Åbner serial porten og sætter data raten til 115200 baud
-  delay(1000);
 
   setup_wifi(); // Kører WiFi loopet og forbinder herved.
   MQTT_Setup(); // Kører setup til MQTT
   u8g2.begin(); // Start OLED-display
-  //RGBSetup();
   RFIDSetup();
-  BUTTONSetup();
 }
 
 void loop() {
   ttime = millis();
   RFIDLoop();
-  NewCardChanger();
-  LEDState();
-  
-  // Hvis der opstår problemer med forbindelsen til mqtt broker oprettes forbindelse igen ved at køre client loop
-  if (!client.connected()) {
-    reconnect();
-  }
-  client.loop();
-
-  delay(1000);
+  MQTT_Loop();
 }
