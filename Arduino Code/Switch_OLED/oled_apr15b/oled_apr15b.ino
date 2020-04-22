@@ -37,8 +37,8 @@
 
 
 // Definerer id og password til netværksforbindelse som NodeMCU anvender
-const char* ssid = "Ellens iPhone"; //Indsæt navnet på jeres netværk her
-const char* password = "karamellen"; //Indsæt password her
+const char* ssid = "XKEYSCORE #C-137"; //Indsæt navnet på jeres netværk her
+const char* password = "arduinocode"; //Indsæt password her
 //dlink-79BC-5GHz uygqk50992
 
 // Definerer information til mqtt serveren
