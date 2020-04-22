@@ -97,3 +97,10 @@ void weather() {
 
   }
 }
+
+void WeatherGetter(){
+  if (ttime - lastWeatherGet >= weatherGetInterval){
+    lastWeatherGet = ttime;
+    weather();
+  }
+}

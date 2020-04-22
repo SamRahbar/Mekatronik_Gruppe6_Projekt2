@@ -131,3 +131,22 @@ void oled() {
       break;
   }
 }
+
+void weatherCycle(){
+  if(ttime - prevWeatherShowed >= weatherInterval){
+    Serial.println("Frame updater");
+    prevWeatherShowed = ttime;
+    if(frame == 3){
+      frame = 1;
+      state = frame;
+      Serial.println("Frame"+ frame);
+      oled();
+    }
+    else{
+      frame ++;
+      state = frame;
+      Serial.println("Frame"+ frame);
+      oled();
+    } 
+  }
+}

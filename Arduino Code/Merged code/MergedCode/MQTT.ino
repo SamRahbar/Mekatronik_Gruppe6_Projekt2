@@ -22,22 +22,22 @@ void callback(char* byteArraytopic, byte* byteArrayPayload, unsigned int length)
       // Loop 2 = "St" osv.
       // Loop (length) = "Study Abroad"
     }
-
+    
 
     // Depending on payload message, set at state for the OLED to display a specific message
-    if (payload == "GETWEATHER") { // Collect fresh weather data every 5 minutes
-      weather();
-      state = 1;
-    }
-    if (payload == "WEATHER1") { // 3 hour forecast
-      state = 1;
-    }
-    if (payload == "WEATHER2") { // 6 hour forecast
-      state = 2;
-    }
-    if (payload == "WEATHER3") { // 9 hour forecast
-      state = 3;
-    }
+//    if (payload == "GETWEATHER") { // Collect fresh weather data every 5 minutes
+//      weather();
+//      state = 1;
+//    }
+//    if (payload == "WEATHER1") { // 3 hour forecast
+//      state = 1;
+//    }
+//    if (payload == "WEATHER2") { // 6 hour forecast
+//      state = 2;
+//    }
+//    if (payload == "WEATHER3") { // 9 hour forecast
+//      state = 3;
+//    }
     if (payload == "OPEN") { // Test - turn on green led
       state = 4;
     }

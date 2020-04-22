@@ -62,6 +62,8 @@ String MasterID = "D9 DF 57 C1";
 
 bool doorOpen = true;
 
+int frame = 3;
+
 unsigned long ttime; //Assigns a value for time
 unsigned long lastTtimeOpen = 0; //Last Time the door was opened
 const long openInterval = 3000; //How long you have to wait to try to open the door 
@@ -69,6 +71,11 @@ unsigned long prevMillisConnect = 0; //Previous time tried to connect
 unsigned long prevMillisReconnect = 0; //Previous time tried to reconnect
 const long openTimerInterval = 28800000; //How long the locker will be closed for
 unsigned long prevOpenTimer = 0; //When the door was locked
+unsigned long prevWeatherShowed = 0;
+const long weatherInterval = 5000;
+unsigned long lastWeatherGet = 0;
+const long weatherGetInterval = 300000;
+
 
 // Opretter en placeholder for callback-funktionen til brug senere. Den rigtige funktion ses længere nede.
 void callback(char* byteArraytopic, byte* byteArrayPayload, unsigned int length);
@@ -82,7 +89,6 @@ PubSubClient client(mqtt_server, mqtt_port, callback, espClient); // Initialiser
 /////// INITIATION FINISHED //////////
 
 void setup() {
-
   Serial.begin(115200); // Åbner serial porten og sætter data raten til 115200 baud
 
   setup_wifi(); // Kører WiFi loopet og forbinder herved.
@@ -90,6 +96,8 @@ void setup() {
   u8g2.begin(); // Start OLED-display
   RFIDSetup();
   weather();
+  weatherCycle();
+  WeatherGetter();
 }
 
 void loop() {
