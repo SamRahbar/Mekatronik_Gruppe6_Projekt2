@@ -31,13 +31,14 @@ void RFIDLoop() {
   //Serial.print("Message : ");
   //content.toUpperCase();
 
-  if (ttime - lastTtimeOpen >= openInterval) {
+
+if (ttime - lastTtimeOpen >= openInterval) {
     bool run = false;
     lastTtimeOpen = ttime;
 
     if (doorOpen == false && run == false) {
       run = true;
-      if ((content.substring(1) == SecureID)||(content.substring(1) == MasterID))  //change UID('s) of the card/cards that you want to give access
+      if ((content.substring(1) == SecureID) || (content.substring(1) == MasterID)) //change UID('s) of the card/cards that you want to give access
       {
         Serial.println("Authorized access");
         doorOpen = true;
@@ -58,8 +59,19 @@ void RFIDLoop() {
       SecureID = content.substring(1);
       Serial.println("New Card has been secured");
       doorOpen = false;
+      prevOpenTimer = ttime;
       state = 6;
       oled();
     }
+  }
+}
+
+void DoorTimerUnlock(){
+   if (ttime - prevOpenTimer >= openTimerInterval && doorOpen == false) {
+    Serial.println("Opened because of timer");
+    doorOpen = true;
+    state = 7;
+    oled();
+    Serial.println();
   }
 }

@@ -111,6 +111,23 @@ void oled() {
 
       //Serial.println("Yeyey");
       break;
+    
+    case 7: // TEST - red LED
 
+      //RGB_color(90,0,0);
+      //delay(100);
+//      client.publish("Status", "Red");
+
+      u8g2.clearBuffer();          // clear the internal memory
+      u8g2.setFont(u8g2_font_ncenB08_tr); // choose a suitable font
+      u8g2.setCursor(0, 10);
+      u8g2.print("Door opened");
+      u8g2.setCursor(0, 20);
+      u8g2.print("because of timer");
+      u8g2.sendBuffer();          // transfer internal memory to the display
+      //delay(100);
+
+      //Serial.println("Yeyey");
+      break;
   }
 }

@@ -56,22 +56,19 @@ float temp1;
 float temp2;
 float temp3;
 
-// -- LED setup -------
-//int red_light_pin   = SDD1;
-//int green_light_pin = SDD2;
-//int blue_light_pin  = SDD3;
-
 //-- RFID Values ------
 String SecureID;
 String MasterID = "D9 DF 57 C1";
 
 bool doorOpen = true;
 
-unsigned long ttime;
-unsigned long lastTtimeOpen = 0;
-const long openInterval = 3000;
-unsigned long prevMillisConnect = 0;
-unsigned long prevMillisReconnect = 0;
+unsigned long ttime; //Assigns a value for time
+unsigned long lastTtimeOpen = 0; //Last Time the door was opened
+const long openInterval = 3000; //How long you have to wait to try to open the door 
+unsigned long prevMillisConnect = 0; //Previous time tried to connect
+unsigned long prevMillisReconnect = 0; //Previous time tried to reconnect
+const long openTimerInterval = 28800000; //How long the locker will be closed for
+unsigned long prevOpenTimer = 0; //When the door was locked
 
 // Opretter en placeholder for callback-funktionen til brug senere. Den rigtige funktion ses længere nede.
 void callback(char* byteArraytopic, byte* byteArrayPayload, unsigned int length);
@@ -92,10 +89,12 @@ void setup() {
   MQTT_Setup(); // Kører setup til MQTT
   u8g2.begin(); // Start OLED-display
   RFIDSetup();
+  weather();
 }
 
 void loop() {
   ttime = millis();
   RFIDLoop();
   MQTT_Loop();
+  DoorTimerUnlock();
 }
