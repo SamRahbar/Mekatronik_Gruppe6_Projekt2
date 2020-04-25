@@ -10,7 +10,7 @@ void callback(char* byteArraytopic, byte* byteArrayPayload, unsigned int length)
   Serial.println("] ");
   // Konverterer den indkomne besked (payload) fra en array til en string:
   // Topic == Temperaturmaaler, Topic == Kraftsensor
-  if (topic == "ToMCU") { // OBS: der subscribes til et topic nede i reconnect-funktionen. I det her tilfælde er der subscribed til "LOCK". Man kan subscribe til alle topics ved at bruge "#"
+  if (topic == "ToMCU") { // OBS: der subscribes til et topic nede i reconnect-funktionen. I det her tilfælde er der subscribed til "ToMCU". Man kan subscribe til alle topics ved at bruge "#"
     payload = ""; // Nulstil payload variablen så forloopet ikke appender til en allerede eksisterende payload
     for (int i = 0; i < length; i++) {
       payload += (char)byteArrayPayload[i];
@@ -22,18 +22,22 @@ void callback(char* byteArraytopic, byte* byteArrayPayload, unsigned int length)
       // Loop 2 = "St" osv.
       // Loop (length) = "Study Abroad"
     }
-    
-    if (payload == "NodeRedSIGNUP") { // Hvis døren bliver låst med NodeRed ved MCU'en det
+    if (payload == "NODEREDSIGNUP") { // Hvis døren bliver låst med NodeRed ved MCU'en det
+      Serial.println("NodeRedSignup is running"); 
       NodeRedInUse = true; // NodeRed bliver brugt
       prevOpenTimer = ttime; //Sets timer start for automatic door open
-      doorOpen == false; //Døren sættes til at være lukket
+      doorOpen = false; //Døren sættes til at være lukket
       state = 8; //Sætter OLED state til at være 8
+      Serial.print("NodeRedInUse = ");Serial.println(NodeRedInUse);
+      Serial.print("doorOpen = ");Serial.println(doorOpen);
     }
-    if (payload == "NodeRedLOGIN") { // Hvis døren bliver åbnet med NodeRed ved MCU'en det
+    if (payload == "NODEREDLOGIN") { // Hvis døren bliver åbnet med NodeRed ved MCU'en det
       NodeRedInUse = false; //NodeRedBliver ikke brugt længere
-      doorOpen == true; // døren er åben og siden knappen er trykket ind, åbnes døren.
+      doorOpen = true; // døren er åben og siden knappen er trykket ind, åbnes døren.
       //OpenDoor(); // Åbner døren
       state = 9; //Sætter OLED state til at være 9
+      Serial.print("NodeRedInUse = ");Serial.println(NodeRedInUse);
+      Serial.print("doorOpen = ");Serial.println(doorOpen);
     }
     else { // If the signal from the mqtt is not one of the available options, give a message to the mqtt server and pass
       Serial.println(payload);

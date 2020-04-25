@@ -34,8 +34,8 @@ const char* password = "arduinocode"; //Wifipassword
 // Definerer information til mqtt serveren
 const char *mqtt_server = "hairdresser.cloudmqtt.com"; //The name of the mqtt site
 const int mqtt_port = 15721; // Defines the mqtt port
-const char *mqtt_user = "Ellen1"; // Defines the mqtt username
-const char *mqtt_pass = "gruppe6go"; //Defines the mqtt code
+const char *mqtt_user = "Sam"; // Defines the mqtt username
+const char *mqtt_pass = "Sam"; //Defines the mqtt code
 
 String payload; //Defines the variable 'payload' in the global scope
 
@@ -71,7 +71,7 @@ bool NodeRedInUse = false; // variable for knowing if node red is in use
 unsigned long ttime; //Assigns a value for time
 unsigned long prevMillisConnect = 0; //Previous time tried to connect
 unsigned long prevMillisReconnect = 0; //Previous time tried to reconnect
-const long openTimerInterval = 28800000; //How long the locker will be closed for
+const long openTimerInterval = 10000;//28800000; //How long the locker will be closed for
 unsigned long prevOpenTimer = 0; //When the door was locked
 unsigned long prevWeatherShowed = 0; //Last time weather was shown
 const long weatherInterval = 5000; //How often weather gets shown
@@ -94,10 +94,10 @@ void setup() {
   Serial.begin(115200); // Åbner serial porten og sætter data raten til 115200 baud
 
   setup_wifi(); // Kører WiFi loopet og forbinder herved.
+  weather(); // Henter vejrinformationen ved startup
   MQTT_Setup(); // Kører setup til MQTT
   u8g2.begin(); // Start OLED-display
   RFIDSetup(); // Kører RFID setup
-  weather(); // Henter vejrinformationen ved startup
   ButtonSetup(); // Kører button setup
   LEDSetup(); // Kører LED setup
 }

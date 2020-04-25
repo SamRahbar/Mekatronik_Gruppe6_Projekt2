@@ -26,8 +26,8 @@ void reconnect() {
 
       if (client.connect("UNIQUE_CLIENT_NAME", mqtt_user, mqtt_pass)) { // Forbinder til klient med mqtt bruger og password
         Serial.println("connected");
-        // Derudover subsribes til topic "LOCK" hvor NodeMCU modtager payload beskeder fra
-        client.subscribe("LOCK");
+        // Derudover subsribes til topic "ToMCU" hvor NodeMCU modtager payload beskeder fra
+        client.subscribe("ToMCU");
         // Der kan subscribes til flere specifikke topics
         //client.subscribe("LED1");
         // Eller til samtlige topics ved at bruge '#' (Se Power Point fra d. 18. marts)

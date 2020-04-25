@@ -70,12 +70,12 @@ void RFIDLoop() {
   }
 }
 void DoorTimerUnlock() { //If the door has been locked, it will only stay locked for 8 hours
-  if ((ttime - prevOpenTimer >= openTimerInterval)) { //if 8 hours have passed
+  if ((ttime - prevOpenTimer >= openTimerInterval)&& doorOpen == false) { //if 8 hours have passed
     Serial.println("Opened because of timer");
     doorOpen = true; //Opens the door
     //OpenDoor();
     state = 7; //Changes oled frame
     oled(); //updates oled
-    client.publish("FromMCU", "DoorOpenWTimer"); //Tells nodered that it has been opened with timer
+    client.publish("FromMCU", "DOOROPENWTIMER"); //Tells nodered that it has been opened with timer
   }
 }
