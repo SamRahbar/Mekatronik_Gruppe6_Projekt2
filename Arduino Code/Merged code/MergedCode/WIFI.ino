@@ -1,8 +1,4 @@
 /////// OPSÆTNING AF WIFI-FORBINDELSE  ///////////
-
-
-
-
 // Opretter forbindelse til WiFi
 void setup_wifi() {
   // Forbinder til et WiFi network
@@ -48,8 +44,4 @@ void reconnect() {
     }
   }
 }
-
-
-
-
 ///////// OPSÆTNING AF WIFI SLUT /////////

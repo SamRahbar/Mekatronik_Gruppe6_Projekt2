@@ -94,13 +94,13 @@ void weather() {
 
     }
     http.end(); //Close connection
-
   }
 }
 
-void WeatherGetter(){
-  if (ttime - lastWeatherGet >= weatherGetInterval){
+void WeatherGetter() { //Updates the weather every 5 minutes
+  if (ttime - lastWeatherGet >= weatherGetInterval) {
     lastWeatherGet = ttime;
     weather();
+    Serial.println("Weather Gotten");
   }
 }

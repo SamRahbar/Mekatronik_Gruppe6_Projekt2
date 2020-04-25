@@ -1,3 +1,6 @@
+unsigned long lastTtimeOpen = 0; //Last Time the door was opened
+const long openInterval = 3000; //How long you have to wait to try to open the door
+
 void RFIDSetup() {
   SPI.begin();          // Initiate  SPI bus
   mfrc522.PCD_Init();   // Initiate MFRC522
@@ -29,49 +32,50 @@ void RFIDLoop() {
   }
   Serial.println();
   //Serial.print("Message : ");
-  //content.toUpperCase();
+  content.toUpperCase(); //Makes the input uniform
 
+  if (NodeRedInUse == false) {//Checks if NodeRed is in use
+    if (ttime - lastTtimeOpen >= openInterval) { //Checks if it has been 3 seconds since last open attempt
+      //bool run = false; //The rest hasn't been run yet
+      lastTtimeOpen = ttime; //Sets last open attempt
 
-if (ttime - lastTtimeOpen >= openInterval) {
-    bool run = false;
-    lastTtimeOpen = ttime;
-
-    if (doorOpen == false && run == false) {
-      run = true;
-      if ((content.substring(1) == SecureID) || (content.substring(1) == MasterID)) //change UID('s) of the card/cards that you want to give access
-      {
-        Serial.println("Authorized access");
-        doorOpen = true;
-        state = 4;
-        oled();
-        Serial.println();
+      if (doorOpen == false) { //If the door is open
+        if ((content.substring(1) == SecureID) || (content.substring(1) == MasterID)) //Checks if the RFID tag used is the secured one or the MasterID (could be the janitor)
+        {
+          Serial.println("Authorized access");
+          client.publish("FromMCU", "RFIDOPEN"); //Tells NodeRed it has been opened with RFID
+          state = 4; //Changes oled frame
+          oled(); //updates OLED
+          doorOpen = true; //Opens door since button is being pressed
+          //OpenDoor();
+        }
+        else   {
+          Serial.println("Access denied");
+          doorOpen = false; //Door remains locked
+          state = 5; //Oled state changes
+          oled(); //Oled updates
+        }
       }
-      else   {
-        Serial.println("Access denied");
-        doorOpen = false;
-        state = 5;
-        oled();
-        Serial.println();
+      else if (doorOpen == true) { //If the door is open, a new card can be secured and used
+        SecureID = content.substring(1); //The SecureID string is updated to match the newly scanned card
+        Serial.println("Door locked with RFID");
+        doorOpen = false; //Door will be locked
+        prevOpenTimer = ttime; //Sets timer start for automatic door open
+        state = 6; //Oled state changes
+        oled(); // Oled updates
+        client.publish("FromMCU", "RFIDLOCK"); //Tells NodeRed that the locker has been locked with RFID
+        //Send MQTT message, (RFIDLOCK)
       }
-    }
-    else if (doorOpen == true && run == false) {
-      run = true;
-      SecureID = content.substring(1);
-      Serial.println("New Card has been secured");
-      doorOpen = false;
-      prevOpenTimer = ttime;
-      state = 6;
-      oled();
     }
   }
 }
-
-void DoorTimerUnlock(){
-   if (ttime - prevOpenTimer >= openTimerInterval && doorOpen == false) {
+void DoorTimerUnlock() { //If the door has been locked, it will only stay locked for 8 hours
+  if ((ttime - prevOpenTimer >= openTimerInterval)) { //if 8 hours have passed
     Serial.println("Opened because of timer");
-    doorOpen = true;
-    state = 7;
-    oled();
-    Serial.println();
+    doorOpen = true; //Opens the door
+    //OpenDoor();
+    state = 7; //Changes oled frame
+    oled(); //updates oled
+    client.publish("FromMCU", "DoorOpenWTimer"); //Tells nodered that it has been opened with timer
   }
 }
