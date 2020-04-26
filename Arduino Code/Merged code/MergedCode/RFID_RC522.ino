@@ -73,6 +73,7 @@ void DoorTimerUnlock() { //If the door has been locked, it will only stay locked
   if ((ttime - prevOpenTimer >= openTimerInterval)&& doorOpen == false) { //if 8 hours have passed
     Serial.println("Opened because of timer");
     doorOpen = true; //Opens the door
+    NodeRedInUse = false; //Resets value since lock is open again
     //OpenDoor();
     state = 7; //Changes oled frame
     oled(); //updates oled

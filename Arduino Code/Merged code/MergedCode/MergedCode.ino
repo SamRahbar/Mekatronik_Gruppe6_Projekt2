@@ -71,7 +71,7 @@ bool NodeRedInUse = false; // variable for knowing if node red is in use
 unsigned long ttime; //Assigns a value for time
 unsigned long prevMillisConnect = 0; //Previous time tried to connect
 unsigned long prevMillisReconnect = 0; //Previous time tried to reconnect
-const long openTimerInterval = 10000;//28800000; //How long the locker will be closed for
+const long openTimerInterval = 28800000; //How long the locker will be closed for
 unsigned long prevOpenTimer = 0; //When the door was locked
 unsigned long prevWeatherShowed = 0; //Last time weather was shown
 const long weatherInterval = 5000; //How often weather gets shown

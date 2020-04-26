@@ -27,7 +27,7 @@ void callback(char* byteArraytopic, byte* byteArrayPayload, unsigned int length)
       NodeRedInUse = true; // NodeRed bliver brugt
       prevOpenTimer = ttime; //Sets timer start for automatic door open
       doorOpen = false; //Døren sættes til at være lukket
-      state = 8; //Sætter OLED state til at være 8
+      state = 9; //Sætter OLED state til at være 8
       Serial.print("NodeRedInUse = ");Serial.println(NodeRedInUse);
       Serial.print("doorOpen = ");Serial.println(doorOpen);
     }
@@ -35,7 +35,7 @@ void callback(char* byteArraytopic, byte* byteArrayPayload, unsigned int length)
       NodeRedInUse = false; //NodeRedBliver ikke brugt længere
       doorOpen = true; // døren er åben og siden knappen er trykket ind, åbnes døren.
       //OpenDoor(); // Åbner døren
-      state = 9; //Sætter OLED state til at være 9
+      state = 8; //Sætter OLED state til at være 9
       Serial.print("NodeRedInUse = ");Serial.println(NodeRedInUse);
       Serial.print("doorOpen = ");Serial.println(doorOpen);
     }
